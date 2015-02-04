@@ -11,13 +11,28 @@
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-animate.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.6/angular-aria.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.js"></script>
+    <script src="/node_modules/angular-local-storage/src/angular-local-storage.js"></script>
     <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/angular_material/0.6.1/angular-material.min.css" />
     <link rel="stylesheet" href="/style.css" />
     <script src="index.js"></script>
   </head>
 
-<body ng-controller="getTwitter">
-  
+  <body ng-controller="getTwitter">
+    <md-container style="height:100vh;" layout="column" layout-align="center center">
+        <md-container layout="row" layout-align="center center">
+            <input id="search-handle" ng-model="search_handle"></input>
+            <md-progress-circular ng-if="loading" class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
+        </md-container>
+        <md-container>
+            <md-button ng-click="getData(search_handle)" class="md-raised md-warn"> 
+                <span> search </span>
+            </md-button>
+            <md-button ng-disabled="!finishLoading" ng-click="download()" class="md-raised md-warn"> 
+                <span> download </span>
+                <span ng-show="finishLoading"> {{name}}'s {{data.length}} followers </span>
+            </md-button>
+        </md-container>
+    </md-container>
   </body>
 
-  </html>
+</html>
