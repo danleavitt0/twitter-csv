@@ -16,7 +16,7 @@ app.factory('followersCache', ['$cacheFactory', function($cacheFactory) {
 app.controller('getTwitter', function($filter,$scope,$http,localStorageService,followersCache){
 
   $scope.follow_button = "get followers";
-  $scope.following_button = "get following";
+  $scope.following_button = "get friends";
 
   $scope.clickFollowers = function(){
     if ($scope.name == $scope.search_handle && $scope.data) {
