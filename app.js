@@ -68,6 +68,10 @@
         });
     });
 
+    app.get('/', function(req,res){
+        res.sendfile(path.join('public/index.html'));
+    })
+
     app.get('*', function(req, res) {
         res.sendfile(path.join('public/index.html'));
     });
