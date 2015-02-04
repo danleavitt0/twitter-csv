@@ -24,12 +24,13 @@
             <md-progress-circular ng-if="loading" class="md-hue-2" md-mode="indeterminate"></md-progress-circular>
         </md-container>
         <md-container>
-            <md-button ng-click="getData(search_handle)" class="md-raised md-warn"> 
-                <span> search </span>
+            <md-button ng-disabled="loading" ng-click="clickFollowers()" class="md-raised md-warn"> 
+                <span> {{follow_button}} </span>
             </md-button>
-            <md-button ng-disabled="!finishLoading" ng-click="download()" class="md-raised md-warn"> 
-                <span> download </span>
-                <span ng-show="finishLoading"> {{name}}'s {{data.length}} followers </span>
+            <md-button ng-disabled="loading" ng-click="clickFollowing()" class="md-raised md-warn"> 
+                <span> {{following_button}} </span>
+            </md-button>
+            <md-button>
             </md-button>
         </md-container>
     </md-container>

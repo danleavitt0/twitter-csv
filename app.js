@@ -68,6 +68,41 @@
         });
     });
 
+    app.get('/getFriends', function(req,res){
+        var user_ids;
+        var handles = []
+        var T = new Twit({
+            consumer_key:         'zk9wP0SLtsbcnYgsuheDdIA4b'
+          , consumer_secret:      'CYwieLzBIAV82irAUjAWzn7CqSDZV2lpYiGGLseRLFBz21WKxt'
+          , access_token:         '323384959-vHtektJ4W0lb4rzocJl8FWm307ophuSEdP2ptMPd'
+          , access_token_secret:  '0K6C2UTEPBfQpcMLV5WdXDcCDYMD7q7epW4VgJ6Sak3G7'
+        });
+
+        T.get('friends/ids', req.query,  function (err, data, response) {
+            console.log(err);
+            if (err)
+                res.status(500).send('Rate Limit');
+            var pages = Math.ceil(data.ids.length / 100);
+
+            for(var i = 0; i < pages; i++){
+                var last = data.ids.length > (i+1)*100 ? (i+1)*100 : data.ids.length;
+                var ids = data.ids.slice(i*100, last);
+                var page = 0;
+                user_ids = ids.toString();
+                T.get('/users/lookup', {'user_id':user_ids} , function (err, data, response){
+                    _.each(data, function(el){
+                        handles.push([el.screen_name, el.description]);
+                    });
+                    if( page+1 == pages ) {
+                        res.send(handles);
+                    }
+                    page++;
+                });
+            }
+            
+        });
+    });
+
     app.get('/', function(req,res){
         res.sendfile(path.join('public/index.html'));
     })
