@@ -22,6 +22,7 @@ app.controller('getTwitter', function($filter,$scope,$http,localStorageService,f
     if ($scope.name == $scope.search_handle && $scope.data) {
       $scope.download($scope.data, 'followers', function(){
         $scope.follow_button = "Get Followers";
+        $scope.data = null;
       });
     }
     else
@@ -34,6 +35,7 @@ app.controller('getTwitter', function($filter,$scope,$http,localStorageService,f
     if ($scope.name == $scope.search_handle && $scope.friends) {
       $scope.download($scope.friends, 'friends', function(){
         $scope.following_button = "Get Friends";
+        $scope.friends = null;
       });
     }
     else
