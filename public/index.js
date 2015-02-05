@@ -91,9 +91,14 @@ app.controller('getTwitter', function($filter,$scope,$http,localStorageService,f
     var dataString;
     var csvContent = '';
     _.each(data, function(el, idx){
+      if(el[1]){
+        if(el[1].search(/\n/) > -1)
+          el[1] = el[1].replace(/\n|\r/g, '');
+      }
       dataString = el.join(',');
       csvContent += idx < data.length ? dataString + '\n' : dataString;
     })
+    console.log(csvContent);
     return csvContent;
   }
 
