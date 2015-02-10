@@ -13,7 +13,7 @@ app.factory('followersCache', ['$cacheFactory', function($cacheFactory) {
   return $cacheFactory('followers-cache');
 }]);
 
-app.controller('getTwitter', function($filter,$scope,$http,localStorageService,followersCache){
+app.controller('getTwitter', function($filter,$scope,$http, $mdToast, localStorageService,followersCache){
 
   $scope.follow_button = "get followers";
   $scope.following_button = "get friends";
@@ -56,12 +56,21 @@ app.controller('getTwitter', function($filter,$scope,$http,localStorageService,f
       'params':{
         'screen_name':name
       }
-    })
-    .success(function(data,status,headers,config) {
+    }).
+    success(function(data,status,headers,config) {
       $scope.friends = data;
       localStorageService.set(name, dataToCsv($scope.friends));
       $scope.loading = false;
       cb();
+    }).
+    error(function(data,status,headers,config){
+      $scope.loading = false;
+      $mdToast.show(
+        $mdToast.simple()
+          .content(data)
+          .position('top right')
+          .hideDelay(3000)
+      );
     });
   };
 
@@ -77,12 +86,21 @@ app.controller('getTwitter', function($filter,$scope,$http,localStorageService,f
       'params':{
         'screen_name':name
       }
-    })
-    .success(function(data,status,headers,config) {
+    }).
+    success(function(data,status,headers,config) {
       $scope.data = data;
       localStorageService.set(name, dataToCsv($scope.data));
       $scope.loading = false;
       cb();
+    }).
+    error(function(data,status,headers,config){
+      $scope.loading = false;
+      $mdToast.show(
+        $mdToast.simple()
+          .content(data)
+          .position('top right')
+          .hideDelay(3000)
+      );
     });
   };
 
@@ -98,7 +116,6 @@ app.controller('getTwitter', function($filter,$scope,$http,localStorageService,f
       dataString = el.join(',');
       csvContent += idx < data.length ? dataString + '\n' : dataString;
     })
-    console.log(csvContent);
     return csvContent;
   }
 
